@@ -1,9 +1,64 @@
-.body {
+body {
   margin: 0;
   padding: 0;
 
+  width: 100vw;
+  height: 100vh;
   font-family: "Jua", sans-serif;
   font-style: normal;
 
   white-space: pre-wrap;
+}
+
+.welcome {
+  /* position: relative; */
+}
+
+.welcome-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  margin-top: 80px;
+}
+.welcome-logo {
+  margin-right: 50px;
+  width: 160px;
+  height: 160px;
+  transform: rotate(-5deg);
+}
+
+.welcome-text {
+  font-size: 5rem;
+  text-align: center;
+}
+
+.welcome-next {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background-color: transparent;
+  top: 0;
+  left: 0;
+}
+
+.welcome-next > span {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, 800%);
+  margin: 20px;
+
+  color: rgb(92, 92, 92);
+  animation: blink-text 1.3s ease-in-out infinite alternate;
+}
+
+@keyframes blink-text {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.3;
+  }
 }

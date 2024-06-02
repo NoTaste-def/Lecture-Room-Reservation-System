@@ -1,13 +1,23 @@
-import React from "react";
-import logo from "./logo.svg";
+import React, { useState } from "react";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
-import Router from "./component/Router";
+import Logo from "./assets/logo.png";
+import Welcome from "./component/Welcome";
+import Main from "./component/Main";
+import Reserve from "./component/Reserve";
+import Office from "./component/Office";
 
 function App() {
   return (
-    <>
-      <Router />
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Welcome />} />
+        <Route path="/reservation" element={<Office />}>
+          <Route path="/reservation/:id" element={<Reserve />} />
+        </Route>
+        <Route path="*" element={<div>404 PAGE</div>} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
