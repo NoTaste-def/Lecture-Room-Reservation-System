@@ -6,6 +6,7 @@ import Welcome from "./component/Welcome";
 import Main from "./component/Main";
 import Reserve from "./component/Reserve";
 import Office from "./component/Office";
+import Elect from "./component/Elect";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/reservation" element={<Office />}>
           <Route path="/reservation/:id" element={<Reserve />} />
         </Route>
+        <Route path="/elect" element={<Elect />} />
         <Route path="*" element={<div>404 PAGE</div>} />
       </Routes>
     </BrowserRouter>

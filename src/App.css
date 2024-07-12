@@ -1,3 +1,7 @@
+:root {
+  --card-width: 200px;
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -8,6 +12,12 @@ body {
   font-style: normal;
 
   white-space: pre-wrap;
+
+  /* -ms-overflow-style: none; */
+}
+
+::-webkit-scrollbar {
+  display: none;
 }
 
 .welcome {
@@ -23,7 +33,7 @@ body {
   margin-top: 80px;
 }
 .welcome-logo {
-  margin-right: 50px;
+  margin-right: 20px;
   width: 160px;
   height: 160px;
   transform: rotate(-5deg);

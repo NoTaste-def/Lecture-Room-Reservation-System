@@ -1,0 +1,171 @@
+@import url(../App.css);
+
+.headerWrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.mainCon {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+.mainWrapper {
+  display: grid;
+  row-gap: 5px;
+  column-gap: 5px;
+  grid-template-areas:
+    "name reason date bNum"
+    "fNum rNum time .";
+  place-items: center;
+
+  margin-right: 11px;
+  font-size: 20px;
+}
+
+@media screen and (max-width: 1255px) {
+  .mainWrapper {
+    display: grid;
+    row-gap: 5px;
+    column-gap: 5px;
+    grid-template-areas:
+      "name reason date"
+      "bNum fNum rNum"
+      ". time .";
+    place-items: center;
+    font-size: 20px;
+  }
+}
+
+@media screen and (max-width: 930px) {
+  .mainWrapper {
+    display: grid;
+    row-gap: 5px;
+    column-gap: 5px;
+    grid-template-areas:
+      "name reason"
+      "date bNum"
+      "fNum rNum"
+      "time .";
+    place-items: center;
+    font-size: 20px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .mainWrapper {
+    display: grid;
+    row-gap: 5px;
+    column-gap: 5px;
+    grid-template-areas:
+      "name"
+      "reason"
+      "date"
+      "bNum"
+      "fNum"
+      "rNum"
+      "time";
+    place-items: center;
+    font-size: 20px;
+  }
+}
+
+.mainWrapper > article {
+  /* display: flex;
+  flex-direction: column;
+  align-items: center; */
+  text-align: center;
+}
+
+.mainWrapper > article:hover {
+  background-color: lightgrey;
+}
+
+.mainWrapper > article > div {
+  border: 1px solid black;
+  width: 100px;
+}
+.mainWrapper > article > span {
+  font-size: 15px;
+}
+
+.contentSubTitle {
+  margin: 0;
+  padding: 0;
+  text-align: start;
+}
+.name {
+  grid-area: name;
+  border: 1px solid black;
+  border-radius: 20px;
+  padding: 20px;
+  width: var(--card-width);
+}
+.reason {
+  grid-area: reason;
+  border: 1px solid black;
+  border-radius: 20px;
+  padding: 20px;
+  width: var(--card-width);
+}
+.date {
+  grid-area: date;
+  border: 1px solid black;
+  border-radius: 20px;
+  padding: 20px;
+  width: var(--card-width);
+}
+.bNum {
+  grid-area: bNum;
+  border: 1px solid black;
+  border-radius: 20px;
+  padding: 20px;
+  width: var(--card-width);
+}
+.fNum {
+  grid-area: fNum;
+  border: 1px solid black;
+  border-radius: 20px;
+  padding: 20px;
+  width: var(--card-width);
+}
+.rNum {
+  grid-area: rNum;
+  border: 1px solid black;
+  border-radius: 20px;
+  padding: 20px;
+  width: var(--card-width);
+}
+.time {
+  grid-area: time;
+  border: 1px solid black;
+  border-radius: 20px;
+  padding: 20px;
+  width: var(--card-width);
+}
+.footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.postBtn {
+  font-family: "Jua", sans-serif;
+  font-style: normal;
+
+  background-color: transparent;
+  border: 1px solid black;
+  padding: 15px;
+  border-radius: 20px;
+  font-size: 20px;
+}
+
+.postBtn:hover {
+  background-color: rgb(255, 34, 0);
+  color: ivory;
+  border: none;
+}
