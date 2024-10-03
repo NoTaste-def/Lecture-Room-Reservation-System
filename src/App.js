@@ -7,6 +7,8 @@ import Main from "./component/Main";
 import Reserve from "./component/Reserve";
 import Office from "./component/Office";
 import Elect from "./component/Elect";
+import Login from "./component/Login";
+import SignUp from "./component/SignUp";
 
 function App() {
   return (
@@ -18,6 +20,8 @@ function App() {
         </Route>
         <Route path="/elect" element={<Elect />} />
         <Route path="*" element={<div>404 PAGE</div>} />
+        <Route path="Login" element={<Login />} />
+        <Route path="SignUp" element={<SignUp />} />
       </Routes>
     </BrowserRouter>
   );
