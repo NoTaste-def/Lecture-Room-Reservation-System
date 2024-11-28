@@ -13,7 +13,7 @@ const Login = () => {
   const [userInfo, setUserInfo] = useState("");
 
   const serverAddress =
-    "https://port-0-haranglogin-9zxht12blqj9n2fu.sel4.cloudtype.app/login";
+    "https://port-0-room-reservations-umnqdut2blqqevwyb.sel4.cloudtype.app/login";
 
   const navigate = useNavigate();
 
@@ -41,12 +41,18 @@ const Login = () => {
         studentNumber: userId,
         password: userPw,
       });
-      setUserInfo(response.data);
-      console.log(response.data);
+      const { user_data, access_token } = response.data;
+      setUserInfo(user_data);
 
-      // 로그인 성공 시 다른 페이지로 이동
-      navigate("/dashboard"); // 예시로 '/dashboard'로 이동
+      // 액세스 토큰
+      localStorage.setItem("AccessToken", access_token);
+      document.cookie = `AccessToken=${access_token}; path=/; max-age=30000; Secure; SameSite=Strict`;
+
+      console.log(response.data);
+      alert("로그인 성공!");
+      navigate("/reservation");
     } catch (error) {
+      alert("로그인 실패!");
       console.error("error fetching users: ", error);
     }
   };
@@ -64,7 +70,7 @@ const Login = () => {
         <div className={style.login_input_container}>
           <h2>로그인</h2>
           <div className={style.Id_container}>
-            <label>ID</label>
+            <label>학번</label>
             <input
               type="text"
               value={userId}
@@ -73,7 +79,7 @@ const Login = () => {
             />
           </div>
           <div className={style.Pw_container}>
-            <label>PW</label>
+            <label>비밀번호</label>
             <input
               type="password"
               value={userPw}

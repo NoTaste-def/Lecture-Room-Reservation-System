@@ -10,6 +10,10 @@ import Elect from "./component/Elect";
 import Login from "./component/Login";
 import SignUp from "./component/SignUp";
 
+import axios from "axios";
+
+axios.defaults.withCredentials = true; // 쿠키를 요청에 포함
+
 function App() {
   const navigate = useNavigate();
 

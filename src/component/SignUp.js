@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import axios from "axios";
 import style from "./SignUp.module.css";
+import { useNavigate } from "react-router-dom";
 
 const SignUp = () => {
+  const navigate = useNavigate();
+
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [studentId, setStudentId] = useState("");
@@ -13,17 +16,20 @@ const SignUp = () => {
     console.log({ name, phone, studentId, password });
 
     const serverAddress =
-      "https://port-0-haranglogin-9zxht12blqj9n2fu.sel4.cloudtype.app/signup";
+      "https://port-0-room-reservations-umnqdut2blqqevwyb.sel4.cloudtype.app/register";
 
     try {
       const response = await axios.post(serverAddress, {
         name: name,
-        phoneNumber: phone,
+        phone: phone,
         studentNumber: studentId,
         password: password,
       });
+      alert("회원가입 성공!");
       console.log("회원가입 성공:", response.data);
+      navigate("/reservation");
     } catch (error) {
+      alert("회원가입 실패");
       console.error("회원가입 오류:", error);
     }
   };
