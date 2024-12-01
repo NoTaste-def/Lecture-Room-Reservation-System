@@ -13,16 +13,16 @@ const Welcome = () => {
         <img className="welcome-logo" src={Logo} />
         <p className="welcome-text">
           {"국립"} <span style={{ color: "darkcyan" }}>한밭대</span>
-          {" 강의\n예약시스템"}
+          {"\n강의실\n예약시스템"}
         </p>
       </main>
       <footer
         className="welcome-next"
-        onClick={() => {
-          toReserve();
-        }}
+        // onClick={() => {
+        //   toReserve();
+        // }}
       >
-        <span>화면을 클릭하여 넘겨주세요.</span>
+        <span>로그인 및 회원가입을 해주세요.</span>
       </footer>
     </div>
   );

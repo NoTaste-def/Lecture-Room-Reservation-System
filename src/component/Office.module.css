@@ -63,9 +63,10 @@
 }
 
 .main {
-  margin-left: 0.5%;
+  /* margin-left: 0.5%; */
   display: flex;
   flex-direction: row;
+  height: auto;
 }
 
 .calendar_container {
@@ -86,7 +87,6 @@
 .react_calendar {
   border: none;
   width: 400px;
-  height: 320px;
   font-size: 1.25em;
   margin: auto;
 }
@@ -94,7 +94,6 @@
 @media (max-width: 1084px) {
   .calendar_container {
     width: 400px;
-    height: 320px;
   }
   .react_calendar {
     font-size: 1.25em;

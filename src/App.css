@@ -11,8 +11,6 @@ body {
   font-family: "Jua", sans-serif;
   font-style: normal;
 
-  white-space: pre-wrap;
-
   /* -ms-overflow-style: none; */
 }
 
@@ -22,6 +20,7 @@ body {
 
 .welcome {
   /* position: relative; */
+  white-space: pre-wrap;
 }
 
 .welcome-wrapper {
@@ -29,11 +28,11 @@ body {
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  gap: 20px;
 
   margin-top: 80px;
 }
 .welcome-logo {
-  margin-right: 20px;
   width: 160px;
   height: 160px;
   transform: rotate(-5deg);
@@ -41,16 +40,17 @@ body {
 
 .welcome-text {
   font-size: 5rem;
-  text-align: center;
+  line-height: 80px;
+  text-align: left;
 }
 
 .welcome-next {
-  position: absolute;
+  /* position: absolute;
   height: 100%;
   width: 100%;
   background-color: transparent;
   top: 0;
-  left: 0;
+  left: 0; */
 }
 
 .welcome-next > span {
@@ -79,6 +79,11 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: 0px 50px 0px 50px;
+  margin-bottom: 3cqmax;
+
+  box-shadow: 0px 0px 8px gray;
+
+  position: sticky;
 }
 
 .upside_nav > h2 {

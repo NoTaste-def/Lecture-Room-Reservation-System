@@ -6,7 +6,7 @@ import logo from "../assets/logo.png";
 import Non from "../assets/Non.svg";
 import Yes from "../assets/Yes.svg";
 
-const Login = () => {
+const Login = ({ setIsLoggedIn }) => {
   const [userId, setUserId] = useState("");
   const [userPw, setUserPw] = useState("");
   const [loginWait, setLoginWait] = useState(false);
@@ -35,25 +35,33 @@ const Login = () => {
       localStorage.setItem("Pw", userPw);
     }
 
-    // 로그인 요청을 버튼을 눌렀을 때만 수행
     try {
       const response = await axios.post(serverAddress, {
         studentNumber: userId,
         password: userPw,
       });
-      const { user_data, access_token } = response.data;
+
+      const user_data = {
+        name: response.data.name,
+        phone: response.data.phone,
+        studentNumber: response.data.studentNumber,
+      };
+      const access_token = response.data.access;
       setUserInfo(user_data);
 
-      // 액세스 토큰
+      // 액세스 토큰 저장
       localStorage.setItem("AccessToken", access_token);
       document.cookie = `AccessToken=${access_token}; path=/; max-age=30000; Secure; SameSite=Strict`;
+
+      // 로그인 상태 업데이트
+      setIsLoggedIn(true);
 
       console.log(response.data);
       alert("로그인 성공!");
       navigate("/reservation");
     } catch (error) {
       alert("로그인 실패!");
-      console.error("error fetching users: ", error);
+      console.error("로그인 오류: ", error);
     }
   };
 
@@ -63,6 +71,7 @@ const Login = () => {
 
   return (
     <div>
+      {/* 로고 섹션 (필요에 따라 주석 해제) */}
       {/* <div className={style.logo_con}>
         <img src={logo} className={style.logoImg} alt="Logo" />
       </div> */}

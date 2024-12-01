@@ -27,7 +27,7 @@ const SignUp = () => {
       });
       alert("회원가입 성공!");
       console.log("회원가입 성공:", response.data);
-      navigate("/reservation");
+      navigate("/login");
     } catch (error) {
       alert("회원가입 실패");
       console.error("회원가입 오류:", error);

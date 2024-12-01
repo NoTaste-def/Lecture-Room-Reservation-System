@@ -12,7 +12,8 @@ import styles from "./Office.module.css";
  * 층 버튼 누르면 각 층에 맞는 호실 버튼 노출.
  */
 
-const URL = "주소";
+const URL =
+  "https://port-0-room-reservations-umnqdut2blqqevwyb.sel4.cloudtype.app";
 const DATA = {
   N4: {
     floors: {
@@ -48,6 +49,7 @@ const Office = () => {
   const [room, setRoom] = useState(null);
   const [res, setRes] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
+  const [detailInfo, setDetailInfo] = useState([]);
   const [reservationInfo, setReservationInfo] = useState({
     name: "",
     reason: "",
@@ -65,8 +67,25 @@ const Office = () => {
 
   const onChange = (newDate) => {
     setDate(newDate);
-    // 여기에 캘린더 일자 눌렀을때 newDate 값 기반으로 AJAX
-    console.log(newDate);
+
+    const year = newDate.getFullYear();
+    const month = newDate.getMonth() + 1;
+    const day = newDate.getDate();
+
+    const queryString = `building=${
+      reservationInfo.building
+    }&floor=${floor?.replace("층", "")}&day=${day}&month=${month}&year=${year}`;
+
+    axios
+      .get(`${URL}/reservation?${queryString}`)
+      .then((response) => {
+        console.log("Response data:", response.data);
+        setDetailInfo(response.data.length > 0 ? response.data[0] : null); // 첫 번째 예약 정보 저장
+      })
+      .catch((err) => {
+        console.error("Error fetching data:", err);
+        setDetailInfo(null); // 오류 시 detailInfo 초기화
+      });
   };
 
   const handleClickBuildingNumber = (num) => {
@@ -85,25 +104,27 @@ const Office = () => {
 
   const handleReservation = () => {
     const payload = {
-      name: reservationInfo.name,
-      reason: reservationInfo.reason,
-      building: reservationInfo.building,
-      floor: parseInt(reservationInfo.floor),
-      day: parseInt(reservationInfo.day),
-      month: parseInt(reservationInfo.month),
-      year: parseInt(reservationInfo.year),
-      room: parseInt(reservationInfo.room),
+      building: transData[buildingNumber].building,
+      floor: parseInt(floor.replace("층", "")),
+      day: date.getDate(),
+      month: date.getMonth() + 1,
+      year: date.getFullYear(),
+      room: parseInt(room),
       start_time: reservationInfo.start_time,
       end_time: reservationInfo.end_time,
+      reason: reservationInfo.reason,
+      name: reservationInfo.name,
+      user: 1,
     };
 
     console.log(payload);
 
     axios
-      .post(`${URL}/reservation/`, payload)
+      .post(`${URL}/reservation`, payload)
       .then((res) => {
         console.log("예약이 완료되었습니다.", res);
         setModalOpen(false);
+        // Reset states
         setReservationInfo({
           name: "",
           reason: "",
@@ -122,17 +143,17 @@ const Office = () => {
       });
   };
 
-  //테스트용
+  // useLocation 스테이트 넘겨주기
   const rightBtn = (row) => {
     navigate("/elect", {
       state: {
-        name: "옥주용",
-        reason: "멋쟁이사자 강의실 대여",
-        date: `2024-06-25`,
-        building: "N11",
-        floor: "3층",
-        room: "306호",
-        time: `19:00 - 21:00`,
+        name: row.user_name,
+        reason: row.reason,
+        date: `${row.year}-${row.month}-${row.day}`,
+        building: row.building,
+        floor: row.floor,
+        room: row.room,
+        time: `${row.start_time} ~ ${row.end_time}`,
       },
     });
   };
@@ -237,51 +258,62 @@ const Office = () => {
               </tr>
             </thead>
             <tbody>
-              <tr onClick={rightBtn}>
-                {/* 테스트용 */}
-                <td>옥주용</td>
-                <td>멋쟁이사자 강의실 대여</td>
-                <td>2024-06-25</td>
-                <td>N4</td>
-                <td>1층</td>
-                <td>101호</td>
-                <td>19:00 - 21:00</td>
-              </tr>
-              {res
-                ? res.map((row) => (
-                    <tr key={row.id} onClick={() => rightBtn(row)}>
-                      <td>{row.name}</td>
-                      <td>{row.reason}</td>
-                      <td>
-                        {row.year}-{row.month}-{row.day}
-                      </td>
-                      <td>{row.building}</td>
-                      <td>{row.floor}</td>
-                      <td>{row.room}</td>
-                      <td>
-                        {row.start_time} ~ {row.end_time}
-                      </td>
-                      <td>
-                        <Link
-                          to={{
-                            pathname: "/elect",
-                            state: {
-                              name: row.name,
-                              reason: row.reason,
-                              date: `${row.year}-${row.month}-${row.day}`,
-                              building: row.building,
-                              floor: row.floor,
-                              room: row.room,
-                              time: `${row.start_time} ~ ${row.end_time}`,
-                            },
-                          }}
-                        >
-                          자세히 보기
-                        </Link>
-                      </td>
-                    </tr>
-                  ))
-                : null}
+              {detailInfo ? (
+                <tr onClick={() => rightBtn(detailInfo)}>
+                  <td>{detailInfo.user_name}</td>
+                  <td>{detailInfo.reason}</td>
+                  <td>
+                    {detailInfo.year}-{detailInfo.month}-{detailInfo.day}
+                  </td>
+                  <td>{detailInfo.building}</td>
+                  <td>{detailInfo.floor}층</td>
+                  <td>{detailInfo.room}</td>
+                  <td>
+                    {detailInfo.start_time} ~ {detailInfo.end_time}
+                  </td>
+                </tr>
+              ) : res && res.length > 0 ? (
+                res.map((row) => (
+                  <tr key={row.id} onClick={() => rightBtn(row)}>
+                    <td>{row.user_name}</td>
+                    <td>{row.reason}</td>
+                    <td>
+                      {row.year}-{row.month}-{row.day}
+                    </td>
+                    <td>{row.building}</td>
+                    <td>{row.floor}</td>
+                    <td>{row.room}</td>
+                    <td>
+                      {row.start_time} ~ {row.end_time}
+                    </td>
+                    <td>
+                      <Link
+                        to={{
+                          pathname: "/elect",
+                          state: {
+                            name: row.user_name,
+                            reason: row.reason,
+                            date: `${row.year}-${row.month}-${row.day}`,
+                            building: row.building,
+                            floor: row.floor,
+                            room: row.room,
+                            time: `${row.start_time} ~ ${row.end_time}`,
+                          },
+                        }}
+                        onClick={rightBtn}
+                      >
+                        자세히 보기
+                      </Link>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="7" style={{ textAlign: "center" }}>
+                    선택한 날짜에 예약 정보가 없습니다.
+                  </td>
+                </tr>
+              )}
             </tbody>
           </table>
         </div>
@@ -303,7 +335,7 @@ const Office = () => {
                 console.error("ERR", err);
               });
 
-            alert("Server is disconnected"); // 서버 연동 없을 때
+            // alert("Server is disconnected"); // 서버 연동 없을 때
           }}
         >
           조회하기
@@ -465,7 +497,7 @@ const Office = () => {
                   <button
                     type="button"
                     onClick={() => {
-                      alert("Server is disconnected"); // 서버 연동 없을 때
+                      // alert("Server is disconnected"); // 서버 연동 없을 때
                       handleReservation();
                     }}
                   >
